@@ -13,8 +13,7 @@ public class PlayerExplosion: MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        Instantiate(playerExplosion, transform.position, Quaternion.identity);
+        GameObject obstacleParticles = Instantiate(playerExplosion.gameObject, transform.position, Quaternion.identity) as GameObject;
         Destroy(gameObject);
     }
-
 }

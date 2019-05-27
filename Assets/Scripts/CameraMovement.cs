@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     public CinemachineVirtualCamera vcam;
 
-    private void Awake()
+    private void Start()
     {
         vcam = GetComponent<CinemachineVirtualCamera>();
         GameController.Instance.GameOverEvent.AddListener(RemoveCameraFollow);

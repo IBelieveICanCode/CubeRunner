@@ -127,7 +127,6 @@
     <Compile Include="Assets\Scripts\Runner\RunnerControl.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UI\UpgradeWindow.cs" />
-    <None Include="Assets\Easy Weapons\Readme.txt" />
     <None Include="Assets\Cinemachine\ReleaseNotes.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Sergey/RepositoryForMyGames/CubeRunner/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
