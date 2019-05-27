@@ -1,13 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class CameraMovement : MonoBehaviour
 {
+    public CinemachineVirtualCamera vcam;
 
-
-    private void Update()
+    private void Awake()
     {
-        transform.eulerAngles = new Vector3(45f, 30f);
+        vcam = GetComponent<CinemachineVirtualCamera>();
+        GameController.Instance.GameOverEvent.AddListener(RemoveCameraFollow);
     }
+
+    private void RemoveCameraFollow()
+    {
+        vcam.LookAt = null;
+        vcam.Follow = null;
+    }
+
 }

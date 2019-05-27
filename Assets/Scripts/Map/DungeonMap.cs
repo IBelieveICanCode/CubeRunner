@@ -46,7 +46,7 @@ public class DungeonMap : MonoBehaviour
 
             for (int i = 0; i < currentMap.PossibleDirections.Length; i++)
             {
-                print( string.Format("Current map open direction {0}, current map flag {1}, elementNum {2}", currentMap.PossibleDirections[i].OpenPos, currentMap.PossibleDirections[i].Open,i));
+                //print( string.Format("Current map open direction {0}, current map flag {1}, elementNum {2}", currentMap.PossibleDirections[i].OpenPos, currentMap.PossibleDirections[i].Open,i));
             }
             if (k == 0)
             {
@@ -235,28 +235,28 @@ public class DungeonMap : MonoBehaviour
                 if (m.MapCenterWorld == up)
                 {
                     currentMap.PossibleDirections[0].Open = false;
-                    print("up if filled");
+                    //print("up if filled");
                 }
                 if (m.MapCenterWorld == down)
                 {
                     currentMap.PossibleDirections[1].Open = false;
-                    print("down if filled");
+                    //print("down if filled");
                 }
                 if (m.MapCenterWorld == right)
                 {
-                    print("right if filled");
+                    //print("right if filled");
                     currentMap.PossibleDirections[2].Open = false;
                 }
                 if (m.MapCenterWorld == left)
                 {
-                    print("left if filled");
+                    //print("left if filled");
                     currentMap.PossibleDirections[3].Open = false;
                 }
             }
             spawnedMapsList.Add(currentMap);
         }
         else {
-            print("there is no fit element, take" + (k - 1).ToString());
+            //print("there is no fit element, take" + (k - 1).ToString());
             SetUp(k - 1);
         }
     }

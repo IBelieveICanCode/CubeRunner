@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum GameState { Play, Pause };
 
 public class GameController : MonoBehaviour
 {
+    public UnityEvent GameOverEvent;
+
     public static GameController Instance;
-    public ILogicDeathDependable playerEntity;
-    public IVisible playerPos;
 
     private GameState state;
     public GameState State
@@ -38,8 +39,6 @@ public class GameController : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
-            Destroy(this);
-        playerEntity = FindObjectOfType<PlayerParticleDestructable>().GetComponent<ILogicDeathDependable>();
-        playerPos = FindObjectOfType<PlayerParticleDestructable>().GetComponent<IVisible>();
+            Destroy(this);        
     }
 }
