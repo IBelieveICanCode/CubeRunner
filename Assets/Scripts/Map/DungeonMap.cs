@@ -7,7 +7,10 @@ public class DungeonMap : MonoBehaviour
     [SerializeField]
     private Transform border;
 
-    public MapExtended [] maps;
+    public int elementsInMap = 10;
+    public MapExtended m;
+
+    private MapExtended [] maps;
     //public int mapIndex;
 
     public Transform tilePrefab;
@@ -34,6 +37,23 @@ public class DungeonMap : MonoBehaviour
 
     protected virtual void Awake()
     {
+        maps = new MapExtended[elementsInMap];
+        for (int i = 0; i < elementsInMap; i++)
+        {
+            maps[i] = new MapExtended();
+
+            maps[i].mapSize = m.mapSize;
+            maps[i].backgroundColour = m.backgroundColour;
+            maps[i].foregroundColour = m.foregroundColour;
+            maps[i].MapCenterWorld = m.MapCenterWorld;
+            maps[i].mapSize = m.mapSize;
+            maps[i].maxObstacleHeight = m.maxObstacleHeight;
+            maps[i].minObstacleHeight = m.minObstacleHeight;
+            maps[i].obstaclePercent = m.obstaclePercent;
+        }
+        maps[0].obstaclePercent = 0;
+        maps[maps.Length - 1].obstaclePercent = 0;
+        //print(maps.Count);
         GenerateMap();
     }
 
@@ -193,6 +213,7 @@ public class DungeonMap : MonoBehaviour
         //Create list of posible directions
         List<PossibleDirection> possiblesDir = new List<PossibleDirection>();
         //Fill list with open side of previous map
+        print(possiblesDir.Count);
         for (int i = 0; i < maps[k - 1].PossibleDirections.Length; i++)
         {
             if (maps[k - 1].PossibleDirections[i].Open)
@@ -256,7 +277,7 @@ public class DungeonMap : MonoBehaviour
             spawnedMapsList.Add(currentMap);
         }
         else {
-            //print("there is no fit element, take" + (k - 1).ToString());
+            print("there is no fit element, take" + (k - 1).ToString());
             SetUp(k - 1);
         }
     }

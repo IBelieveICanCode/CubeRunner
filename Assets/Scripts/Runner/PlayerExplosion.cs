@@ -9,17 +9,17 @@ public class PlayerExplosion: MonoBehaviour
 
     private void Start()
     {
-        GameController.Instance.GameOverEvent.AddListener(OnPlayerDeath);
         playerRenderer = GetComponent<Renderer>();
     }
 
-    private void OnPlayerDeath()
+    public void InvokeExplosion()
     {
         //GameObject obstacleParticles = Instantiate(playerExplosion.gameObject, transform.position, Quaternion.identity) as GameObject;
         GameObject obstacleParticles = Instantiate(playerExplosion.gameObject, transform.position, Quaternion.identity) as GameObject;
         Color color = new Color(playerRenderer.material.color.r, playerRenderer.material.color.g, playerRenderer.material.color.b, 1f);
         var main = obstacleParticles.GetComponent<ParticleSystem>().main;
         main.startColor = color;
+        obstacleParticles.transform.forward = -GetComponent<CubeControl>().currentFace.normalized;
         obstacleParticles.GetComponent<ParticleSystem>().Play();
         Destroy(gameObject);
     }

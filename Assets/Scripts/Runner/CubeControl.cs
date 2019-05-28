@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CubeControl : MonoBehaviour
 {
+    [Range(0,1)]
+    public float fallingSpeedKoef = 0.25f;
     public float speed;
     // The point the cube will rotate around
     // They represent the middle point of each 4 bottom edges of the cube
@@ -20,7 +22,7 @@ public class CubeControl : MonoBehaviour
     Vector3 leftFace;
     Vector3 forwardFace;
     Vector3 backFace;
-    Vector3 currentFace;
+    public Vector3 currentFace;
 
     Bounds bounds;
     bool rolling;
@@ -82,8 +84,7 @@ public class CubeControl : MonoBehaviour
         }
         else
         {
-            transform.position += Vector3.down; //* speed;
-
+            transform.position += Vector3.down * fallingSpeedKoef; //* speed;
         }
     }
 
@@ -138,7 +139,9 @@ public class CubeControl : MonoBehaviour
         {
             Debug.DrawRay(face, currentFace.normalized, Color.red);
             gameOver = true;
+            GameController.Instance.GameOverEvent.AddListener(GetComponent<PlayerExplosion>().InvokeExplosion);
             GameController.Instance.GameOverEvent?.Invoke();
+            GameController.Instance.GameOverEvent = null;
             return true;
         }
         return false;
