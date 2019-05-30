@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -912,6 +912,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cabc70bb310f6ab49b583a304410cc83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MapController: {fileID: 6871382807028847256}
+  ElementsInMap: 60
+  Map:
+    mapSize:
+      x: 3
+      y: 3
+    obstaclePercent: 0.175
+    seed: 0
+    minObstacleHeight: 1.5
+    maxObstacleHeight: 2.5
+    foregroundColour: {r: 0.6792453, g: 0.16340333, b: 0.16340333, a: 0}
+    backgroundColour: {r: 0.9197615, g: 0.23349057, b: 0.9339623, a: 0}
+    MapCenterWorld: {x: 0, y: 0, z: 0}
+  outlinePercent: 0.035
+  tileSize: 1
+  playerTransform: {fileID: 1649011503}
   GameOverEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -961,26 +977,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   border: {fileID: 5831534295012509097, guid: a318e2bd97ce641be9a09d496e5ff7f3, type: 3}
-  elementsInMap: 20
-  m:
-    mapSize:
-      x: 10
-      y: 10
-    obstaclePercent: 0.159
-    seed: 0
-    minObstacleHeight: 1
-    maxObstacleHeight: 2
-    foregroundColour: {r: 0.8867924, g: 0.8190315, b: 0.12130654, a: 0}
-    backgroundColour: {r: 1, g: 0, b: 0, a: 0}
-    MapCenterWorld: {x: 0, y: 0, z: 0}
   tilePrefab: {fileID: 2561900045770523630, guid: 1e5ed4c14b5c20746878d3640ab440d2,
     type: 3}
   obstaclePrefab: {fileID: 5195643321336792987, guid: 6b2d6511fd501fb4f82ffc1df6c12df1,
     type: 3}
   mapFloor: {fileID: 2804900504230014577, guid: de982b487676c5e41a341422c242ba3a,
     type: 3}
-  maxMapSize: {x: 50, y: 50}
-  outlinePercent: 0.03
 --- !u!4 &6871382807028847257
 Transform:
   m_ObjectHideFlags: 0

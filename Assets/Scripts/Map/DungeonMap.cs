@@ -7,35 +7,53 @@ public class DungeonMap : MonoBehaviour
     [SerializeField]
     private Transform border;
 
-    public int elementsInMap = 10;
-    public MapExtended m;
+    private int elementsInMap = 10;
+    private MapExtended m;
 
     private MapExtended [] maps;
-    //public int mapIndex;
 
     public Transform tilePrefab;
     public Transform obstaclePrefab;
     public Transform mapFloor;
-    //public Transform navmeshFloor;
-   // public Transform navmeshMaskPrefab;
-    public Vector2 maxMapSize;
 
-    [Range(0, 1)]
-    public float outlinePercent;
+    [HideInInspector]
+    private float outlinePercent;
     public static float tileSize = 1;
-    List<Coord> allTileCoords;
-    Queue<Coord> shuffledTileCoords;
-    Queue<Coord> shuffledOpenTileCoords;
-    Transform[,] tileMap;
 
-    MapExtended currentMap;
+    private List<Coord> allTileCoords;
+    private Queue<Coord> shuffledTileCoords;
+    private Queue<Coord> shuffledOpenTileCoords;
+
+    private Transform[,] tileMap;
+
+    private MapExtended currentMap;
 
     private Vector3 initPoint = Vector3.zero;
-    //private Vector3 lastInitPoint = Vector3.zero;
 
     private List<MapExtended> spawnedMapsList = new List<MapExtended>();
 
     protected virtual void Awake()
+    {
+        //Init();
+    }
+
+    public virtual void Init()
+    {
+        FillMaps();
+        GenerateMap();
+    }
+
+    public virtual void Init(int elementsInMap, MapExtended map, float outlinePercent,float tileSize)
+    {
+        this.elementsInMap = elementsInMap;
+        this.m = map;
+        this.outlinePercent = outlinePercent;
+        DungeonMap.tileSize = tileSize;
+        Init();
+
+    }
+
+    public void FillMaps()
     {
         maps = new MapExtended[elementsInMap];
         for (int i = 0; i < elementsInMap; i++)
@@ -53,10 +71,7 @@ public class DungeonMap : MonoBehaviour
         }
         maps[0].obstaclePercent = 0;
         maps[maps.Length - 1].obstaclePercent = 0;
-        //print(maps.Count);
-        GenerateMap();
-    }
-
+    } 
 
     public void GenerateMap()
     {
@@ -350,6 +365,7 @@ public class DungeonMap : MonoBehaviour
     }
 
 }
+//TODO: It will be nice to make default map and map extended Constructors
 [System.Serializable]
  public class MapExtended : Map
 {

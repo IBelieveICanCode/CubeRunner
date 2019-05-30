@@ -5,10 +5,10 @@ using UnityEngine.Events;
 
 public enum GameState { Play, Pause };
 
+//This class will be the enter point of Game scene
 public class GameController : MonoBehaviour
 {
-    public UnityEvent GameOverEvent;
-
+    #region Singleton
     public static GameController Instance;
 
     private GameState state;
@@ -41,4 +41,35 @@ public class GameController : MonoBehaviour
         else
             Destroy(this);        
     }
+    #endregion
+    [Header("Map setup")]
+    public DungeonMap MapController;
+    public int ElementsInMap;
+    public MapExtended Map;
+    [Range(0f,1f)]
+    public float outlinePercent = 0.02f;
+    public float tileSize = 1;
+    [Space]
+    [Header("PlayerSettings")]
+    public Transform playerTransform;
+
+    private void Start()
+    {
+        PlayerInit();
+        //InitMap
+        MapController.Init(ElementsInMap, Map, outlinePercent, tileSize);
+    }
+
+    public UnityEvent GameOverEvent;
+
+    #region Methods
+    private void PlayerInit()
+    { 
+        if (Map.mapSize.x % 2 == 0)
+            playerTransform.position = Vector3.one * tileSize / 2;
+        else
+            playerTransform.position = new Vector3(0f, tileSize / 2, 0f);
+        playerTransform.localScale = Vector3.one * tileSize;
+    }
+    #endregion
 }
