@@ -292,7 +292,7 @@ public class DungeonMap : MonoBehaviour
             spawnedMapsList.Add(currentMap);
         }
         else {
-            print("there is no fit element, take" + (k - 1).ToString());
+            //print("there is no fit element, take" + (k - 1).ToString());
             SetUp(k - 1);
         }
     }

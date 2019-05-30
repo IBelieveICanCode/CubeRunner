@@ -58,6 +58,14 @@ public class GameController : MonoBehaviour
         PlayerInit();
         //InitMap
         MapController.Init(ElementsInMap, Map, outlinePercent, tileSize);
+
+        //This code is only for test
+        BonusController bc = new BonusController();
+        print("Bonuses in list = " + bc.bonuses.Count);
+        print(bc[BonusType.Flash]);
+        print(bc[BonusType.Destroyer]);
+        print(bc[BonusType.Knight]);
+        print(bc[BonusType.None]);
     }
 
     public UnityEvent GameOverEvent;

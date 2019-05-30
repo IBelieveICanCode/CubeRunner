@@ -1,9 +1,11 @@
 ﻿<Properties StartupConfiguration="{E67A532A-156C-C563-1F3D-F09F01ECEC96}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Bonuses/BonusController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Map/DungeonMap.cs" Line="362" Column="30" />
-      <File FileName="Assets/Scripts/GameController.cs" Line="46" Column="26" />
+      <File FileName="Assets/Scripts/Map/DungeonMap.cs" Line="295" Column="15" />
+      <File FileName="Assets/Scripts/GameController.cs" Line="64" Column="38" />
       <File FileName="Assets/Scripts/Runner/CubeControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Bonuses/Bonus.cs" Line="20" Column="26" />
+      <File FileName="Assets/Scripts/Bonuses/BonusController.cs" Line="18" Column="36" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,9 +13,11 @@
           <Node name="CubeRunner" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
+                <Node name="Bonuses" expanded="True">
+                  <Node name="BonusController.cs" selected="True" />
+                </Node>
                 <Node name="Map" expanded="True" />
                 <Node name="Runner" expanded="True" />
-                <Node name="GameController.cs" selected="True" />
               </Node>
             </Node>
           </Node>
