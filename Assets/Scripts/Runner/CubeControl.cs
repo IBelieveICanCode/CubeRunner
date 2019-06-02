@@ -51,25 +51,29 @@ public class CubeControl : MonoBehaviour
     {
         if (!gameOver)
         {
-            if (Input.GetKey("up"))
+            //if (Input.GetKey("up"))
+            if(TouchController.currentDirection == Vector3.forward)
             {
                 currentRotationPoint = forwardRotationPoint;
                 currentFace = forwardFace;
             }
             // Rotate around back point when pressing the down button
-            else if (Input.GetKey("down"))
+            //else if (Input.GetKey("down"))
+            else if (TouchController.currentDirection == Vector3.back)
             {
                 currentRotationPoint = backRotationPoint;
                 currentFace = backFace;
             }
             // Rotate around left point when pressing the left button
-            else if (Input.GetKey("left"))
+            //else if (Input.GetKey("left"))
+            else if (TouchController.currentDirection == Vector3.left)
             {
                 currentRotationPoint = leftRotationPoint;
                 currentFace = leftFace;
             }
             // Rotate around right point when pressing the right button
-            else if (Input.GetKey("right"))
+            //else if (Input.GetKey("right"))
+            else if (TouchController.currentDirection == Vector3.right)
             {
                 currentRotationPoint = rightRotationPoint;
                 currentFace = rightFace;

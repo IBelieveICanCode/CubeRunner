@@ -228,7 +228,7 @@ public class DungeonMap : MonoBehaviour
         //Create list of posible directions
         List<PossibleDirection> possiblesDir = new List<PossibleDirection>();
         //Fill list with open side of previous map
-        print(possiblesDir.Count);
+
         for (int i = 0; i < maps[k - 1].PossibleDirections.Length; i++)
         {
             if (maps[k - 1].PossibleDirections[i].Open)
