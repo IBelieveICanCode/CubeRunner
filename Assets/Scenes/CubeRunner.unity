@@ -928,6 +928,7 @@ MonoBehaviour:
   outlinePercent: 0.035
   tileSize: 1
   playerTransform: {fileID: 1649011503}
+  PlayerData: {fileID: 11400000, guid: 9b1af04d7e262e74e98a7d25d5ba9cf4, type: 2}
   GameOverEvent:
     m_PersistentCalls:
       m_Calls: []

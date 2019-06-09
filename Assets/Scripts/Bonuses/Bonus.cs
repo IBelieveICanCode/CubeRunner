@@ -3,22 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //public abstract class Bonus : MonoBehaviour
-public class Bonus : MonoBehaviour
+public abstract class Bonus : MonoBehaviour
 {
     public string Name = "None";
     public BonusType Type = BonusType.None;
     //public abstract void DoSomething();
 
-    public Bonus()
-    {
-         
-    }
-
-    public Bonus(BonusType type, string name)
-    {
-        this.Type = type;
-        this.Name = name;
-    }
+    public abstract void OnTriggerEnter(Collider other);
 }
 
 public enum BonusType
@@ -29,5 +20,6 @@ public enum BonusType
     Destroyer,
     Climber,
     Jumper,
-    Knight
+    Knight,
+    Coin
 }

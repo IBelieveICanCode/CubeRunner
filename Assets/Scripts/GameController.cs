@@ -52,20 +52,20 @@ public class GameController : MonoBehaviour
     [Space]
     [Header("PlayerSettings")]
     public Transform playerTransform;
+    public PlayerInstance PlayerData;
 
     private void Start()
     {
+        Debug.Log(Application.persistentDataPath);
         PlayerInit();
         //InitMap
         MapController.Init(ElementsInMap, Map, outlinePercent, tileSize);
 
         //This code is only for test
         BonusController bc = new BonusController();
-        print("Bonuses in list = " + bc.bonuses.Count);
-        print(bc[BonusType.Flash]);
-        print(bc[BonusType.Destroyer]);
-        print(bc[BonusType.Knight]);
-        print(bc[BonusType.None]);
+        //PlayerData.Save();
+        PlayerData.Load();
+        
     }
 
     public UnityEvent GameOverEvent;

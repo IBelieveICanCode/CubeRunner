@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class BonusController : MonoBehaviour
 {
-    public List<Bonus> bonuses = new List<Bonus> 
-    { 
-    new Bonus { Type = BonusType.Destroyer,Name="Destoyer" },
-    new Bonus(BonusType.Flash,"Flash"),
-    new Bonus { Name="Ice", Type = BonusType.Ice },
-    new Bonus (BonusType.Jumper,"It's a jumper")
-    };
+    public List<Bonus> bonuses = new List<Bonus>();
+
 
     //This called indexer
     //How to call it look at GameController Start

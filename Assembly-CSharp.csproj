@@ -117,6 +117,7 @@
     <Compile Include="Assets\Cinemachine\Timeline\CinemachineTrack.cs" />
     <Compile Include="Assets\Scripts\Bonuses\Bonus.cs" />
     <Compile Include="Assets\Scripts\Bonuses\BonusController.cs" />
+    <Compile Include="Assets\Scripts\Bonuses\Coin.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Creatures\PlayerBasicControl.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Assets\Scripts\Runner\PlayerExplosion.cs" />
     <Compile Include="Assets\Scripts\Runner\RunnerControl.cs" />
     <Compile Include="Assets\Scripts\Runner\TouchController.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\PlayerInstance.cs" />
     <Compile Include="Assets\Scripts\UI\HUD.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <None Include="Assets\Cinemachine\ReleaseNotes.txt" />
