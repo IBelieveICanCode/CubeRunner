@@ -1,17 +1,41 @@
 ﻿<Properties StartupConfiguration="{E67A532A-156C-C563-1F3D-F09F01ECEC96}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Bonuses/Bonus.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Bonuses/BonusController.cs">
     <Files>
       <File FileName="Assets/Scripts/Map/DungeonMap.cs" Line="295" Column="15" />
       <File FileName="Assets/Scripts/GameController.cs" Line="64" Column="38" />
       <File FileName="Assets/Scripts/Runner/CubeControl.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Bonuses/Bonus.cs" Line="20" Column="26" />
       <File FileName="Assets/Scripts/Bonuses/BonusController.cs" Line="18" Column="36" />
-      <File FileName="Assets/Scripts/Runner/TouchController.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CubeRunner" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Bonuses" expanded="True">
+                  <Node name="BonusController.cs" selected="True" />
+                </Node>
+                <Node name="Map" expanded="True" />
+                <Node name="Runner" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="CubeRunner" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="fd0d9080-3c45-4852-adcc-17ec296c9738" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
