@@ -118,6 +118,7 @@
     <Compile Include="Assets\Scripts\Bonuses\Bonus.cs" />
     <Compile Include="Assets\Scripts\Bonuses\BonusController.cs" />
     <Compile Include="Assets\Scripts\Bonuses\Coin.cs" />
+    <Compile Include="Assets\Scripts\Bonuses\LevelRewards.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Creatures\PlayerBasicControl.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />

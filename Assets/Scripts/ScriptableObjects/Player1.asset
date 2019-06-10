@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38577bd12d6cb6f4399a0d133027a80f, type: 3}
   m_Name: Player1
   m_EditorClassIdentifier: 
-  Name: Serega
-  Coins: 100
-  BestScore: 1000
+  Name: Dmitrii
+  Coins: 3333
+  BestScore: 0

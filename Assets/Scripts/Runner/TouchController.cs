@@ -47,8 +47,5 @@ public class TouchController : MonoBehaviour
         }
         else
             currentDirection = new Vector3(0f, 0f, finalPosition.y).normalized;
-        print(currentDirection);
-
-
     }
 }

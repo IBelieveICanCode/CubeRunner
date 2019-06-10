@@ -56,7 +56,6 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(Application.persistentDataPath);
         PlayerInit();
         //InitMap
         MapController.Init(ElementsInMap, Map, outlinePercent, tileSize);
@@ -64,8 +63,10 @@ public class GameController : MonoBehaviour
         //This code is only for test
         BonusController bc = new BonusController();
         //PlayerData.Save();
-        PlayerData.Load();
-        
+        //PlayerData.Load();
+        PlayerData.LoadAsJSON();
+        //PlayerData.SaveAsJSON();
+
     }
 
     public UnityEvent GameOverEvent;

@@ -11,15 +11,17 @@ public class PlayerInstance : ScriptableObject
     public float Coins = 0f;
     public float BestScore = 0f;
 
+
+    /*
     public void Save()
     {
         //var dir = @"C:\playerInfo.dat";// Application.persistentDataPath + "/playerInfo.dat";
         //if (!Directory.Exists(dir))
         //    Directory.CreateDirectory(dir);
 
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (!File.Exists(path))
         {
-            FileStream fs = new FileStream(Application.persistentDataPath + "/playerInfo.dat", FileMode.Create);
+            FileStream fs = new FileStream(path, FileMode.Create);
             fs.Close();
         }
         BinaryFormatter bf = new BinaryFormatter();
@@ -29,7 +31,35 @@ public class PlayerInstance : ScriptableObject
         PlayerData data = new PlayerData { Name= this.Name, Coins = this.Coins, BestScore = this.BestScore};
         bf.Serialize(file, data);        
     }
+    */
+    public void SaveAsJSON()
+    {
+        string path = Application.persistentDataPath + "/playerInfo.json";
+        if (!File.Exists(path))
+        {
+            File.Create(path).Dispose();
+        }
+        PlayerData data = new PlayerData { Name = this.Name, Coins = this.Coins, BestScore = this.BestScore };
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(path, json);
+        Debug.Log("Saving as JSON: " + json);
+    }
 
+    public void LoadAsJSON()
+    {
+        string path = Application.persistentDataPath + "/playerInfo.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            PlayerData data = new PlayerData { Name = "", Coins = 0f, BestScore = 0f };
+            data = JsonUtility.FromJson<PlayerData>(json);
+            Name = data.Name;
+            Coins = data.Coins;
+            BestScore = data.BestScore;
+            Debug.Log(json);
+        }
+    }
+    /*
     public void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
@@ -44,7 +74,7 @@ public class PlayerInstance : ScriptableObject
             BestScore = data.BestScore;
         }
     }
-
+    */
 }
 
 [System.Serializable]
