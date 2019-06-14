@@ -27,7 +27,8 @@ public class CubeControl : MonoBehaviour
     Bounds bounds;
     bool rolling;
     bool gameOver = false;
-
+    [SerializeField]
+    bool isTouchControl = false;
     void Start()
     {       
         bounds = GetComponent<MeshRenderer>().bounds;
@@ -51,32 +52,13 @@ public class CubeControl : MonoBehaviour
     {
         if (!gameOver)
         {
-            //if (Input.GetKey("up"))
-            if(TouchController.currentDirection == Vector3.forward)
+            if (!isTouchControl)
             {
-                currentRotationPoint = forwardRotationPoint;
-                currentFace = forwardFace;
+                KeysControl();
             }
-            // Rotate around back point when pressing the down button
-            //else if (Input.GetKey("down"))
-            else if (TouchController.currentDirection == Vector3.back)
+            else
             {
-                currentRotationPoint = backRotationPoint;
-                currentFace = backFace;
-            }
-            // Rotate around left point when pressing the left button
-            //else if (Input.GetKey("left"))
-            else if (TouchController.currentDirection == Vector3.left)
-            {
-                currentRotationPoint = leftRotationPoint;
-                currentFace = leftFace;
-            }
-            // Rotate around right point when pressing the right button
-            //else if (Input.GetKey("right"))
-            else if (TouchController.currentDirection == Vector3.right)
-            {
-                currentRotationPoint = rightRotationPoint;
-                currentFace = rightFace;
+                TouchControl();
             }
             // Make sure you are not already rolling / moving
             if (rolling )
@@ -89,6 +71,60 @@ public class CubeControl : MonoBehaviour
         else
         {
             transform.position += Vector3.down * fallingSpeedKoef; //* speed;
+        }
+    }
+
+    private void KeysControl()
+    {
+        if (Input.GetKey("up"))
+        {
+            currentRotationPoint = forwardRotationPoint;
+            currentFace = forwardFace;
+        }
+        // Rotate around back point when pressing the down button
+        else if (Input.GetKey("down"))
+        {
+            currentRotationPoint = backRotationPoint;
+            currentFace = backFace;
+        }
+        // Rotate around left point when pressing the left button
+        else if (Input.GetKey("left"))
+        {
+            currentRotationPoint = leftRotationPoint;
+            currentFace = leftFace;
+        }
+        // Rotate around right point when pressing the right button
+        else if (Input.GetKey("right"))
+        {
+            currentRotationPoint = rightRotationPoint;
+            currentFace = rightFace;
+        }
+    }
+
+    private void TouchControl()
+    {
+        if (TouchController.currentDirection == Vector3.forward)
+        {
+            currentRotationPoint = forwardRotationPoint;
+            currentFace = forwardFace;
+        }
+        // Rotate around back point when pressing the down button
+        else if (TouchController.currentDirection == Vector3.back)
+        {
+            currentRotationPoint = backRotationPoint;
+            currentFace = backFace;
+        }
+        // Rotate around left point when pressing the left button
+        else if (TouchController.currentDirection == Vector3.left)
+        {
+            currentRotationPoint = leftRotationPoint;
+            currentFace = leftFace;
+        }
+        // Rotate around right point when pressing the right button
+        else if (TouchController.currentDirection == Vector3.right)
+        {
+            currentRotationPoint = rightRotationPoint;
+            currentFace = rightFace;
         }
     }
 
@@ -117,22 +153,23 @@ public class CubeControl : MonoBehaviour
         transform.RotateAround(point, axis, angle);
 
         // Allow the user to roll in a new direction
-        CheckIfGrounded();            
+        CheckFloor();
         rolling = false;
     }
-
-    private bool CheckIfGrounded()
+    // Check for ground tile and win tile
+    private void CheckFloor()
     {
         Vector3 currentBottomCenter = transform.position + bottomCenterPoint;
         RaycastHit hit;
         if (Physics.Raycast(currentBottomCenter, Vector3.down, out hit))
         {
-            Debug.DrawRay(currentBottomCenter, Vector3.down, Color.red);
-            return true;
+            print(hit.transform.name);
+            if (hit.transform.tag == "Win")
+                GameController.Instance.WinEvent?.Invoke();
+            return;
         }
         gameOver = true;
         GameController.Instance.GameOverEvent?.Invoke();
-        return false;
     }
 
     private bool CheckForObstacle()

@@ -913,12 +913,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapController: {fileID: 6871382807028847256}
-  ElementsInMap: 100
+  ElementsInMap: 5
   Map:
     mapSize:
-      x: 30
-      y: 30
-    obstaclePercent: 0.001
+      x: 5
+      y: 5
+    obstaclePercent: 0
     seed: 0
     minObstacleHeight: 1.5
     maxObstacleHeight: 2.5
@@ -930,6 +930,11 @@ MonoBehaviour:
   playerTransform: {fileID: 1649011503}
   PlayerData: {fileID: 11400000, guid: 9b1af04d7e262e74e98a7d25d5ba9cf4, type: 2}
   GameOverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  WinEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -1147,6 +1152,11 @@ PrefabInstance:
         type: 3}
       propertyPath: fallingSpeedKoef
       value: 0.544
+      objectReference: {fileID: 0}
+    - target: {fileID: 3177844283694357334, guid: 93bc10695df710c4c86500c1fa9ff516,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93bc10695df710c4c86500c1fa9ff516, type: 3}

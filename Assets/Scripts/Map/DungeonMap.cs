@@ -34,7 +34,7 @@ public class DungeonMap : MonoBehaviour
 
     protected virtual void Awake()
     {
-        //Init();
+  
     }
 
     public virtual void Init()
@@ -42,7 +42,7 @@ public class DungeonMap : MonoBehaviour
         FillMaps();
         GenerateMap();
     }
-
+    // Method to communicate with GameController
     public virtual void Init(int elementsInMap, MapExtended map, float outlinePercent,float tileSize)
     {
         this.elementsInMap = elementsInMap;
@@ -52,7 +52,7 @@ public class DungeonMap : MonoBehaviour
         Init();
 
     }
-
+    //Filling list of maps
     public void FillMaps()
     {
         maps = new MapExtended[elementsInMap];
@@ -78,6 +78,9 @@ public class DungeonMap : MonoBehaviour
         for (int k = 0; k < maps.Length; k++)
         {
             currentMap = maps[k];
+            string holderName = "Generated Map" + k.ToString();
+            Transform mapHolder = new GameObject(holderName).transform;
+            mapHolder.parent = transform;
 
             for (int i = 0; i < currentMap.PossibleDirections.Length; i++)
             {
@@ -101,95 +104,120 @@ public class DungeonMap : MonoBehaviour
             System.Random prng = new System.Random(currentMap.seed);
 
             // Generating coords
-            allTileCoords = new List<Coord>();
-            for (int x = 0; x < currentMap.mapSize.x; x++)
-            {
-                for (int y = 0; y < currentMap.mapSize.y; y++)
-                {
-                    allTileCoords.Add(new Coord(x, y));
-                       
-                }
-            }
-            shuffledTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCoords.ToArray(), currentMap.seed));
-
-            string holderName = "Generated Map" + k.ToString();
-
-            Transform mapHolder = new GameObject(holderName).transform;
-            mapHolder.parent = transform;
+            GenerateCoords(k);
 
             // Spawning tiles
-            
-            for (int x = 0; x < currentMap.mapSize.x; x++)
-            {
-                for (int y = 0; y < currentMap.mapSize.y; y++)
-                {
-                    Vector3 tilePosition = CoordToPosition(x, y) + initPoint;
-                    Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90)) as Transform;
-                    newTile.localScale = Vector3.one * (1 - outlinePercent) * tileSize;
-                    newTile.parent = mapHolder;
-                    tileMap[x, y] = newTile;
-                }
-            }
+            SpawnTiles(k,mapHolder);
 
             // Spawning obstacles
-            bool[,] obstacleMap = new bool[(int)currentMap.mapSize.x, (int)currentMap.mapSize.y];
-
-            int obstacleCount = (int)(currentMap.mapSize.x * currentMap.mapSize.y * currentMap.obstaclePercent);
-            int currentObstacleCount = 0;
-            List<Coord> allOpenCoords = new List<Coord>(allTileCoords);
-
-            for (int i = 0; i < obstacleCount; i++)
-            {
-                Coord randomCoord = GetRandomCoord();
-                obstacleMap[randomCoord.x, randomCoord.y] = true;
-                currentObstacleCount++;
-
-                if (randomCoord != currentMap.mapCentre && MapIsFullyAccessible(obstacleMap, currentObstacleCount))
-                {
-                    float obstacleHeight = Mathf.Lerp(currentMap.minObstacleHeight, currentMap.maxObstacleHeight, (float)prng.NextDouble());
-                    Vector3 obstaclePosition = CoordToPosition(randomCoord.x, randomCoord.y) + initPoint;
-
-                    Transform newObstacle = Instantiate(obstaclePrefab, obstaclePosition + Vector3.up * obstacleHeight / 2, Quaternion.identity) as Transform;
-                    newObstacle.parent = mapHolder;
-                    newObstacle.localScale = new Vector3((1 - outlinePercent) * tileSize, obstacleHeight, (1 - outlinePercent) * tileSize);
-
-                    Renderer obstacleRenderer = newObstacle.GetComponent<Renderer>();
-                    Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
-                    float colourPercent = randomCoord.y / (float)currentMap.mapSize.y;
-                    obstacleMaterial.color = Color.Lerp(currentMap.foregroundColour, currentMap.backgroundColour, colourPercent);
-                    obstacleRenderer.sharedMaterial = obstacleMaterial;
-
-                    allOpenCoords.Remove(randomCoord);
-                }
-                else
-                {
-                    obstacleMap[randomCoord.x, randomCoord.y] = false;
-                    currentObstacleCount--;
-                }
-            }
-
-            shuffledOpenTileCoords = new Queue<Coord>(Utility.ShuffleArray(allOpenCoords.ToArray(), currentMap.seed));
-
-            Transform localFloor = Instantiate(mapFloor, initPoint+Vector3.down*0.1f, Quaternion.identity);
-            localFloor.eulerAngles = new Vector3(90f, 0f);
-            localFloor.localScale = new Vector3(currentMap.mapSize.x * tileSize, currentMap.mapSize.y * tileSize, 1f);
-            localFloor.parent = mapHolder;
+            SpawnObstacles(mapHolder,prng);
         }
 
+        //This methode spawn borders
+        //SpawnBorders();
+    }
+
+    #region Methods
+    void GenerateCoords(int k)
+    {
+        allTileCoords = new List<Coord>();
+        for (int x = 0; x < currentMap.mapSize.x; x++)
+        {
+            for (int y = 0; y < currentMap.mapSize.y; y++)
+            {
+                allTileCoords.Add(new Coord(x, y));
+
+            }
+        }
+        shuffledTileCoords = new Queue<Coord>(Utility.ShuffleArray(allTileCoords.ToArray(), currentMap.seed));
+    }
+
+    void SpawnTiles(int k,Transform mapHolder)
+    {
+        int centralTile = Mathf.CeilToInt(currentMap.mapSize.x/2f) - 1;
+        for (int x = 0; x < currentMap.mapSize.x; x++)
+        {
+            for (int y = 0; y < currentMap.mapSize.y; y++)
+            {
+                Vector3 tilePosition = CoordToPosition(x, y) + initPoint;
+                Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90)) as Transform;
+                newTile.localScale = Vector3.one * (1 - outlinePercent) * tileSize;
+                newTile.parent = mapHolder;
+                tileMap[x, y] = newTile;
+                if (y == centralTile && y == x && k == maps.Length-1)
+                {
+                    Renderer tileRenderer = newTile.GetComponent<Renderer>();
+                    Material tileMaterial = new Material(tileRenderer.sharedMaterial);
+                    tileMaterial.color = Color.green;
+                    tileRenderer.sharedMaterial = tileMaterial;
+                    newTile.tag = "Win";
+                }
+
+
+            }
+        }
+    }
+
+    void SpawnObstacles(Transform mapHolder, System.Random prng)
+    {
+        bool[,] obstacleMap = new bool[(int)currentMap.mapSize.x, (int)currentMap.mapSize.y];
+
+        int obstacleCount = (int)(currentMap.mapSize.x * currentMap.mapSize.y * currentMap.obstaclePercent);
+        int currentObstacleCount = 0;
+        List<Coord> allOpenCoords = new List<Coord>(allTileCoords);
+
+        for (int i = 0; i < obstacleCount; i++)
+        {
+            Coord randomCoord = GetRandomCoord();
+            obstacleMap[randomCoord.x, randomCoord.y] = true;
+            currentObstacleCount++;
+
+            if (randomCoord != currentMap.mapCentre && MapIsFullyAccessible(obstacleMap, currentObstacleCount))
+            {
+                float obstacleHeight = Mathf.Lerp(currentMap.minObstacleHeight, currentMap.maxObstacleHeight, (float)prng.NextDouble());
+                Vector3 obstaclePosition = CoordToPosition(randomCoord.x, randomCoord.y) + initPoint;
+
+                Transform newObstacle = Instantiate(obstaclePrefab, obstaclePosition + Vector3.up * obstacleHeight / 2, Quaternion.identity) as Transform;
+                newObstacle.parent = mapHolder;
+                newObstacle.localScale = new Vector3((1 - outlinePercent) * tileSize, obstacleHeight, (1 - outlinePercent) * tileSize);
+
+                Renderer obstacleRenderer = newObstacle.GetComponent<Renderer>();
+                Material obstacleMaterial = new Material(obstacleRenderer.sharedMaterial);
+                float colourPercent = randomCoord.y / (float)currentMap.mapSize.y;
+                obstacleMaterial.color = Color.Lerp(currentMap.foregroundColour, currentMap.backgroundColour, colourPercent);
+                obstacleRenderer.sharedMaterial = obstacleMaterial;
+
+                allOpenCoords.Remove(randomCoord);
+            }
+            else
+            {
+                obstacleMap[randomCoord.x, randomCoord.y] = false;
+                currentObstacleCount--;
+            }
+        }
+
+        shuffledOpenTileCoords = new Queue<Coord>(Utility.ShuffleArray(allOpenCoords.ToArray(), currentMap.seed));
+
+        Transform localFloor = Instantiate(mapFloor, initPoint + Vector3.down * 0.1f, Quaternion.identity);
+        localFloor.eulerAngles = new Vector3(90f, 0f);
+        localFloor.localScale = new Vector3(currentMap.mapSize.x * tileSize, currentMap.mapSize.y * tileSize, 1f);
+        localFloor.parent = mapHolder;
+    }
+
+    void SpawnBorders()
+    {
         float _thickness = 0.5f;
         Vector2 _mapBorders = Vector2.zero;
-        Vector3 _bPos= Vector3.zero;
+        Vector3 _bPos = Vector3.zero;
         Transform b;
-
-        //This methode spawn borders
         foreach (MapExtended m in maps)
-        { 
-            foreach(PossibleDirection pd in m.PossibleDirections)
-            { 
-                if(pd.Open)
+        {
+            foreach (PossibleDirection pd in m.PossibleDirections)
+            {
+                if (pd.Open)
                 {
                     //pd.OpenPos;
-                    if(pd.OpenPos == Vector2.right)
+                    if (pd.OpenPos == Vector2.right)
                     {
                         _mapBorders = new Vector2(m.mapSize.x * tileSize, m.mapSize.y * tileSize);
                         _bPos = new Vector3(m.mapSize.x * tileSize / 2 + _thickness / 2, 0f, 0f) + m.MapCenterWorld;
@@ -338,7 +366,7 @@ public class DungeonMap : MonoBehaviour
 
     Vector3 CoordToPosition(int x, int y)
     {
-        return new Vector3(-currentMap.mapSize.x / 2f + 0.5f + x, 0, -currentMap.mapSize.y / 2f + 0.5f + y) * tileSize ;
+        return new Vector3(-currentMap.mapSize.x / 2f + 0.5f + x, -0.01f, -currentMap.mapSize.y / 2f + 0.5f + y) * tileSize ;
     }
 
     public Transform GetTileFromPosition(Vector3 position)
@@ -363,7 +391,7 @@ public class DungeonMap : MonoBehaviour
         shuffledOpenTileCoords.Enqueue(randomCoord);
         return tileMap[randomCoord.x, randomCoord.y];
     }
-
+    #endregion
 }
 //TODO: It will be nice to make default map and map extended Constructors
 [System.Serializable]

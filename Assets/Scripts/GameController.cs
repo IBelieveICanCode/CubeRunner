@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public enum GameState { Play, Pause };
@@ -66,11 +67,11 @@ public class GameController : MonoBehaviour
         //PlayerData.Load();
         PlayerData.LoadAsJSON();
         //PlayerData.SaveAsJSON();
-
+        WinEvent.AddListener(() => { SceneManager.LoadScene(0); });
     }
 
     public UnityEvent GameOverEvent;
-
+    public UnityEvent WinEvent;
     #region Methods
     private void PlayerInit()
     { 

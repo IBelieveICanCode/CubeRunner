@@ -6,7 +6,7 @@ public class Coin : Bonus
 {
     public override void OnTriggerEnter(Collider other)
     {
-        LevelRewards.CollectedCoins++;
-        print(LevelRewards.CollectedCoins);
+        //Levels.CollectedCoins++;
+        //print(Levels.CollectedCoins);
     }
 }
