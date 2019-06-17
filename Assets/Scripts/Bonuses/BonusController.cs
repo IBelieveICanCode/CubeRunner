@@ -11,16 +11,16 @@ public class BonusController : MonoBehaviour
     //How to call it look at GameController Start
     //Easy way to get bonus for spawn of any type
     //Also can contain set function
-    public string this[BonusType type]
+    public GameObject this[BonusType type]
     { 
         get
         { 
             foreach(var b in bonuses)
             {
                 if (b.Type == type)
-                    return b.Name;
+                    return b.gameObject;
             }
-            return "No such type bonus in this list";
+            return null;
         }
     }
 

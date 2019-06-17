@@ -43,14 +43,19 @@ public class DungeonMap : MonoBehaviour
         GenerateMap();
     }
     // Method to communicate with GameController
-    public virtual void Init(int elementsInMap, MapExtended map, float outlinePercent,float tileSize)
+    public virtual Vector3 Init(int elementsInMap, MapExtended map, float outlinePercent,float tileSize)
     {
         this.elementsInMap = elementsInMap;
         this.m = map;
         this.outlinePercent = outlinePercent;
         DungeonMap.tileSize = tileSize;
         Init();
-
+        foreach (var posDir in maps[0].PossibleDirections)
+        {
+            if (posDir.Open == false)
+                return posDir.OpenPos;
+        }
+        return Vector3.zero;
     }
     //Filling list of maps
     public void FillMaps()
@@ -92,6 +97,7 @@ public class DungeonMap : MonoBehaviour
                 //lastInitPoint = Vector3.zero;
                 currentMap.MapCenterWorld = initPoint;
                 spawnedMapsList.Add(currentMap);
+
             }
             else
             {
@@ -111,11 +117,14 @@ public class DungeonMap : MonoBehaviour
 
             // Spawning obstacles
             SpawnObstacles(mapHolder,prng);
+
+            SpawnCoin();
         }
 
         //This methode spawn borders
         //SpawnBorders();
     }
+
 
     #region Methods
     void GenerateCoords(int k)
@@ -392,6 +401,19 @@ public class DungeonMap : MonoBehaviour
         return tileMap[randomCoord.x, randomCoord.y];
     }
     #endregion
+
+    //FIXME: Need to close open tiles 
+    void SpawnCoin()
+    {
+        foreach (Coord openTile in shuffledOpenTileCoords)
+        {
+            GameObject coin = GameController.Instance.BonusController[BonusType.Coin];
+            Vector3 coinPosition = tileMap[openTile.x, openTile.y].position
+                + coin.transform.localScale.y * Vector3.up;
+            coin = Instantiate(coin, coinPosition, Quaternion.identity);
+            coin.transform.localScale = Vector3.one * tileSize * 0.3f;
+        }
+    }
 }
 //TODO: It will be nice to make default map and map extended Constructors
 [System.Serializable]

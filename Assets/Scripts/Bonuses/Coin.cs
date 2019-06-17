@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Coin : Bonus
 {
+
     public override void OnTriggerEnter(Collider other)
     {
-        //Levels.CollectedCoins++;
-        //print(Levels.CollectedCoins);
+        LevelProgress.Instance.Coins++;
+        Destroy(gameObject);
     }
+
 }

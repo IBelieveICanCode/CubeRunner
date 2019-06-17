@@ -43,8 +43,26 @@ public class CubeControl : MonoBehaviour
         rightFace = new Vector3(bounds.extents.x, 0f, 0f);
         leftFace = new Vector3(-bounds.extents.x, 0f, 0f);
 
-        currentRotationPoint = forwardRotationPoint;
-        currentFace = forwardFace;
+        if (GameController.StartDirection == Vector2.up)
+        {
+            currentRotationPoint = forwardRotationPoint;
+            currentFace = forwardFace;
+        }
+        else if (GameController.StartDirection == Vector2.down)
+        {
+            currentRotationPoint = backRotationPoint;
+            currentFace = backFace;
+        }
+        else if (GameController.StartDirection == Vector2.left)
+        {
+            currentRotationPoint = leftRotationPoint;
+            currentFace = leftFace;
+        }
+        else if (GameController.StartDirection == Vector2.right)
+        {
+            currentRotationPoint = rightRotationPoint;
+            currentFace = rightFace;
+        }        
         bottomCenterPoint = new Vector3(0, -bounds.extents.y, 0);
     }
 
@@ -190,3 +208,4 @@ public class CubeControl : MonoBehaviour
 
 
 }
+

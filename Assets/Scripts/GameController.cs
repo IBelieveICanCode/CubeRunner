@@ -40,7 +40,8 @@ public class GameController : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
-            Destroy(this);        
+            Destroy(this);
+        Init();
     }
     #endregion
     [Header("Map setup")]
@@ -54,13 +55,14 @@ public class GameController : MonoBehaviour
     [Header("PlayerSettings")]
     public Transform playerTransform;
     public PlayerInstance PlayerData;
-
-    private void Start()
+    public static Vector2 StartDirection;
+    [Header("References")]
+    public BonusController BonusController;
+    private void Init()
     {
-        PlayerInit();
         //InitMap
-        MapController.Init(ElementsInMap, Map, outlinePercent, tileSize);
-
+        PlayerInit();
+        StartDirection =  MapController.Init(ElementsInMap, Map, outlinePercent, tileSize);        
         //This code is only for test
         BonusController bc = new BonusController();
         //PlayerData.Save();

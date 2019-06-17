@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Levels
+public class Level
 {
     public int CollectedCoins = 0;
     public float CurrentScore = 0f;
-    public int DonateCoins = 0;
+    public float HighScore = 0f;
 }

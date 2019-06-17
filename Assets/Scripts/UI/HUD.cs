@@ -5,15 +5,26 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class HUD : MonoBehaviour
 {
+    #region Singleton
     public static HUD Instance;
-
-
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
             Destroy(this);
+    }
+    #endregion
+
+    [Header("Info")]
+    [SerializeField]
+    private Text txtScore;
+    [SerializeField]
+    private Text txtCoins;
+
+    private void Start()
+    {
+        UpdateUI();
     }
 
     public void Restart()
@@ -25,5 +36,11 @@ public class HUD : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
+    }
+
+    public void UpdateUI()
+    {
+        txtCoins.text = "Coins: " + LevelProgress.Instance.Coins.ToString();
+        txtScore.text = "Score: " + LevelProgress.Instance.Score.ToString();
     }
 }
