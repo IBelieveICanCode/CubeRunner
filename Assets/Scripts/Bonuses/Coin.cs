@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Coin : Bonus
 {
-
-    public override void OnTriggerEnter(Collider other)
+    protected override void UseBonus(CubeControl cube)
     {
         LevelProgress.Instance.Coins++;
-        Destroy(gameObject);
+        base.UseBonus(cube);
     }
-
 }

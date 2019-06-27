@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,16 @@ public abstract class Bonus : MonoBehaviour
     public BonusType Type = BonusType.None;
     //public abstract void DoSomething();
 
-    public abstract void OnTriggerEnter(Collider other);
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        CubeControl cube = other.GetComponent<CubeControl>();
+        if (cube != null)
+            UseBonus(cube);
+    }
+    protected virtual void UseBonus(CubeControl cube)
+    {
+        Destroy(gameObject);
+    }
 }
 
 public enum BonusType
@@ -21,5 +31,6 @@ public enum BonusType
     Climber,
     Jumper,
     Knight,
-    Coin
+    Coin,
+    Reverse
 }

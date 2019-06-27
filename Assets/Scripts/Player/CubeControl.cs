@@ -2,12 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+//public delegate void BonusHandler();
 public class CubeControl : MonoBehaviour
 {
+    public IEnumerator enumerator;
+    //public event BonusHandler BonusEvent;
     [Range(0,1)]
     public float fallingSpeedKoef = 0.25f;
-    public float speed;
+    [SerializeField]
+    private float speed;
     // The point the cube will rotate around
     // They represent the middle point of each 4 bottom edges of the cube
     Vector3 forwardRotationPoint;
@@ -29,6 +34,9 @@ public class CubeControl : MonoBehaviour
     bool gameOver = false;
     [SerializeField]
     bool isTouchControl = false;
+    public bool isDestroyer = false;
+    public float Speed { get => speed; set => speed = value; }
+
     void Start()
     {       
         bounds = GetComponent<MeshRenderer>().bounds;
@@ -70,6 +78,16 @@ public class CubeControl : MonoBehaviour
     {
         if (!gameOver)
         {
+            //if (BonusEvent != null)
+            //{
+            //    BonusEvent();
+            //    BonusEvent = null;
+            //}
+            if (enumerator != null)
+            {
+                StartCoroutine(enumerator);
+                enumerator = null;
+            }
             if (!isTouchControl)
             {
                 KeysControl();
@@ -90,6 +108,8 @@ public class CubeControl : MonoBehaviour
         {
             transform.position += Vector3.down * fallingSpeedKoef; //* speed;
         }
+
+        
     }
 
     private void KeysControl()
@@ -161,7 +181,7 @@ public class CubeControl : MonoBehaviour
         while (angle > 0)
         {
             // Compute the angle and rotate the cube around the point
-            a = speed;
+            a = Speed;
             transform.RotateAround(point, axis, a);
             // Keep track of the remaining angle
             angle -= a;
@@ -194,14 +214,22 @@ public class CubeControl : MonoBehaviour
     {
         Vector3 face= transform.position + currentFace;
         RaycastHit hit;
+        //FIXME:we should check if it's indeed obstacle.
         if (Physics.Raycast(face, currentFace.normalized, out hit, 0.1f))
         {
-            Debug.DrawRay(face, currentFace.normalized, Color.red);
-            gameOver = true;
-            GameController.Instance.GameOverEvent.AddListener(GetComponent<PlayerExplosion>().InvokeExplosion);
-            GameController.Instance.GameOverEvent?.Invoke();
-            GameController.Instance.GameOverEvent = null;
-            return true;
+            //Debug.DrawRay(face, currentFace.normalized, Color.red);
+            if (isDestroyer)
+            {
+                hit.collider.GetComponent<Obstacle>().Destroy();
+            }
+            else
+            {
+                gameOver = true;
+                GameController.Instance.GameOverEvent.AddListener(GetComponent<PlayerExplosion>().InvokeExplosion);
+                GameController.Instance.GameOverEvent?.Invoke();
+                GameController.Instance.GameOverEvent = null;
+                return true;
+            }
         }
         return false;
     }

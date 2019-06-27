@@ -5,8 +5,6 @@ using UnityEngine;
 public class BonusController : MonoBehaviour
 {
     public List<Bonus> bonuses = new List<Bonus>();
-
-
     //This called indexer
     //How to call it look at GameController Start
     //Easy way to get bonus for spawn of any type

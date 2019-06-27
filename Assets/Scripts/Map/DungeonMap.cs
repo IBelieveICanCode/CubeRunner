@@ -118,6 +118,7 @@ public class DungeonMap : MonoBehaviour
             // Spawning obstacles
             SpawnObstacles(mapHolder,prng);
 
+            //SpawnCoin
             SpawnCoin();
         }
 
