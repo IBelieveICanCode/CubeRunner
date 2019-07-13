@@ -119,9 +119,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb85262ea08b44b4d8abca29578f39b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallingSpeedKoef: 0.25
-  speed: 5
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  fallingSpeedKoef: 0.544
+  speed: 7.6
   currentFace: {x: 0, y: 0, z: 0}
+  isTouchControl: 0
+  isDestroyer: 1
 --- !u!114 &1785750003286770636
 MonoBehaviour:
   m_ObjectHideFlags: 0

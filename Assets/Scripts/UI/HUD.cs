@@ -21,6 +21,7 @@ public class HUD : MonoBehaviour
     private Text txtScore;
     [SerializeField]
     private Text txtCoins;
+    public OptionsWindowHud Options;
 
     private void Start()
     {
@@ -36,11 +37,19 @@ public class HUD : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
             Restart();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            ShowWindow(Options.gameObject);
     }
 
     public void UpdateUI()
     {
-        txtCoins.text = "Coins: " + LevelProgress.Instance.Coins.ToString();
-        txtScore.text = "Score: " + LevelProgress.Instance.Score.ToString();
+        txtCoins.text = "COINS: " + LevelProgress.Instance.Coins.ToString();
+        txtScore.text = "SCORE: " + LevelProgress.Instance.Score.ToString();
+    }
+
+    void ShowWindow(GameObject windowToShow)
+    {
+        windowToShow.SetActive(true);
+        GameController.Instance.State = GameState.Pause;
     }
 }

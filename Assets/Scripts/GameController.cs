@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
         else
             Destroy(this);
         Init();
+        State = GameState.Play;
     }
     #endregion
     [Header("Map setup")]

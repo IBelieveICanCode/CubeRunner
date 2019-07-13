@@ -7,12 +7,15 @@ using UnityEngine.Events;
 //public delegate void BonusHandler();
 public class CubeControl : MonoBehaviour
 {
+    [SerializeField]
+    private LayerMask obstacleMask;
     public IEnumerator enumerator;
     //public event BonusHandler BonusEvent;
     [Range(0,1)]
     public float fallingSpeedKoef = 0.25f;
     [SerializeField]
     private float speed;
+    
     // The point the cube will rotate around
     // They represent the middle point of each 4 bottom edges of the cube
     Vector3 forwardRotationPoint;
@@ -74,7 +77,7 @@ public class CubeControl : MonoBehaviour
         bottomCenterPoint = new Vector3(0, -bounds.extents.y, 0);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!gameOver)
         {
@@ -201,7 +204,7 @@ public class CubeControl : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(currentBottomCenter, Vector3.down, out hit))
         {
-            print(hit.transform.name);
+            //print(hit.transform.name);
             if (hit.transform.tag == "Win")
                 GameController.Instance.WinEvent?.Invoke();
             return;
@@ -215,12 +218,12 @@ public class CubeControl : MonoBehaviour
         Vector3 face= transform.position + currentFace;
         RaycastHit hit;
         //FIXME:we should check if it's indeed obstacle.
-        if (Physics.Raycast(face, currentFace.normalized, out hit, 0.1f))
+        if (Physics.Raycast(face, currentFace.normalized, out hit, 0.1f, obstacleMask))
         {
             //Debug.DrawRay(face, currentFace.normalized, Color.red);
             if (isDestroyer)
             {
-                hit.collider.GetComponent<Obstacle>().Destroy();
+                hit.collider.GetComponent<Obstacle>().Destroy(currentFace.normalized);
             }
             else
             {

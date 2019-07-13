@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node 
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool walkable;
+    public Vector3 worldPosition;
+    public int gridX, gridY;
+    public int hCost, gCost;
+    public Node parent;
+
+    public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY)
     {
-        
+        walkable = _walkable;
+        worldPosition = _worldPos;
+        gridX = _gridX;
+        gridY = _gridY;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int fCost
     {
-        
+        get {
+            return hCost + gCost;
+        }
     }
 }

@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\Bonuses\Chainer.cs" />
     <Compile Include="Assets\Scripts\Bonuses\Coin.cs" />
     <Compile Include="Assets\Scripts\Bonuses\Destroyer.cs" />
+    <Compile Include="Assets\Scripts\Bonuses\Flash.cs" />
     <Compile Include="Assets\Scripts\Bonuses\Level.cs" />
     <Compile Include="Assets\Scripts\Bonuses\LevelProgress.cs" />
     <Compile Include="Assets\Scripts\Bonuses\TimeDependentBonus.cs" />
@@ -132,7 +133,6 @@
     <Compile Include="Assets\Scripts\Map\Obstacle.cs" />
     <Compile Include="Assets\Scripts\Map\Utility.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Grid.cs" />
-    <Compile Include="Assets\Scripts\Pathfinding\MoveTarget.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Node.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Player\CubeControl.cs" />
@@ -142,6 +142,7 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\PlayerInstance.cs" />
     <Compile Include="Assets\Scripts\UI\HUD.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\OptionsWindowHud.cs" />
     <None Include="Assets\Cinemachine\ReleaseNotes.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Sergey/RepositoryForMyGames/CubeRunner/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
