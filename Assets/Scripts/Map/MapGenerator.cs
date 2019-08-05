@@ -16,7 +16,6 @@ public class MapGenerator : MonoBehaviour
     public Transform navmeshFloor;
     public Transform navmeshMaskPrefab;
     public Vector2 maxMapSize;
-
     [Range(0, 1)]
     public float outlinePercent;
     public float tileSize;
@@ -230,10 +229,11 @@ public class MapGenerator : MonoBehaviour
 
 
 [System.Serializable]
-public struct Coord
+public class Coord
 {
     public int x;
     public int y;
+
 
     public Coord(int _x, int _y)
     {

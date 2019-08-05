@@ -6,10 +6,9 @@ public class DungeonMap : MonoBehaviour
 {
     [SerializeField]
     private Transform border;
-
+    private NewGrid grid;
     private int elementsInMap = 10;
     private MapExtended m;
-
     private MapExtended [] maps;
 
     public Transform tilePrefab;
@@ -21,6 +20,7 @@ public class DungeonMap : MonoBehaviour
     public static float tileSize = 1;
 
     private List<Coord> allTileCoords;
+    private List<Vector3> coordsForBonus = new List<Vector3>();
     private Queue<Coord> shuffledTileCoords;
     private Queue<Coord> shuffledOpenTileCoords;
 
@@ -34,13 +34,15 @@ public class DungeonMap : MonoBehaviour
 
     protected virtual void Awake()
     {
-  
+        grid = GetComponent<NewGrid>();
     }
 
     public virtual void Init()
     {
         FillMaps();
         GenerateMap();
+        SpawnGrid();
+        //SpawnCoin();
     }
     // Method to communicate with GameController
     public virtual Vector3 Init(int elementsInMap, MapExtended map, float outlinePercent,float tileSize)
@@ -113,15 +115,15 @@ public class DungeonMap : MonoBehaviour
             GenerateCoords(k);
 
             // Spawning tiles
-            SpawnTiles(k,mapHolder);
+            SpawnTiles(k, mapHolder);
 
             // Spawning obstacles
             SpawnObstacles(mapHolder,prng);
 
-            //SpawnCoin
-            SpawnCoin();
+            //SpawnGrid(currentMap);
+            //SpawnCoin            
         }
-
+       
         //This methode spawn borders
         //SpawnBorders();
     }
@@ -162,8 +164,6 @@ public class DungeonMap : MonoBehaviour
                     tileRenderer.sharedMaterial = tileMaterial;
                     newTile.tag = "Win";
                 }
-
-
             }
         }
     }
@@ -206,8 +206,13 @@ public class DungeonMap : MonoBehaviour
             }
         }
 
-        shuffledOpenTileCoords = new Queue<Coord>(Utility.ShuffleArray(allOpenCoords.ToArray(), currentMap.seed));
-
+        //shuffledOpenTileCoords = new Queue<Coord>(Utility.ShuffleArray(allOpenCoords.ToArray(), currentMap.seed));
+        foreach (Coord coord in allOpenCoords)
+        {
+            Vector3 worldCoordPos = CoordToPosition(coord.x, coord.y) + initPoint;
+            coordsForBonus.Add(worldCoordPos);
+        }
+            
         Transform localFloor = Instantiate(mapFloor, initPoint + Vector3.down * 0.1f, Quaternion.identity);
         localFloor.eulerAngles = new Vector3(90f, 0f);
         localFloor.localScale = new Vector3(currentMap.mapSize.x * tileSize, currentMap.mapSize.y * tileSize, 1f);
@@ -395,22 +400,27 @@ public class DungeonMap : MonoBehaviour
         return randomCoord;
     }
 
-    public Transform GetRandomOpenTile()
-    {
-        Coord randomCoord = shuffledOpenTileCoords.Dequeue();
-        shuffledOpenTileCoords.Enqueue(randomCoord);
-        return tileMap[randomCoord.x, randomCoord.y];
-    }
+
+    //public Transform GetRandomOpenTile()
+    //{
+    //    Coord randomCoord = shuffledOpenTileCoords.Dequeue();
+    //    shuffledOpenTileCoords.Enqueue(randomCoord);
+    //    return tileMap[randomCoord.x, randomCoord.y];
+    //}
     #endregion
 
-    //FIXME: Need to close open tiles 
-    void SpawnCoin()
+    void SpawnGrid()
     {
-        foreach (Coord openTile in shuffledOpenTileCoords)
+        grid.CreateGrid(coordsForBonus);
+    }
+
+    //FIXME: Need to close open tiles 
+    public void SpawnCoin()
+    {
+        foreach (Vector3 openTile in coordsForBonus)
         {
             GameObject coin = GameController.Instance.BonusController[BonusType.Coin];
-            Vector3 coinPosition = tileMap[openTile.x, openTile.y].position
-                + coin.transform.localScale.y * Vector3.up;
+            Vector3 coinPosition = openTile + coin.transform.localScale.y * Vector3.up;
             coin = Instantiate(coin, coinPosition, Quaternion.identity);
             coin.transform.localScale = Vector3.one * tileSize * 0.3f;
         }

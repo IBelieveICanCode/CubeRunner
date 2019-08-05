@@ -133,8 +133,12 @@
     <Compile Include="Assets\Scripts\Map\Obstacle.cs" />
     <Compile Include="Assets\Scripts\Map\Utility.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Grid.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\Heap.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\NewGrid.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Node.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\Pathfinding.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\PathRequestManager.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\Unit.cs" />
     <Compile Include="Assets\Scripts\Player\CubeControl.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerExplosion.cs" />
     <Compile Include="Assets\Scripts\Player\RunnerControl.cs" />
